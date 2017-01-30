@@ -4,27 +4,34 @@ using UnityEngine;
 
 public class CreateMesh : MonoBehaviour {
 
-    public float size;
+    public GameObject ground;
 
     private void Awake()
     {
         Mesh m = new Mesh();
         m.name = "Scripted_Plane_New_Mesh";
-        m.vertices = new Vector3[4];
-        m.vertices[0] = new Vector3(-size, -size, .01f);
-        m.vertices[1] = new Vector3(size, -size, .01f);
-        m.vertices[2] = new Vector3(size, size, .01f);
-        m.vertices[3] = new Vector3(-size, size, .01f);
+        Vector3[] vertices = new Vector3[4];
+        vertices[0] = new Vector3(-1, -1, 0);
+        vertices[1] = new Vector3(1, -1, 0);
+        vertices[2] = new Vector3(1, 1, 0);
+        vertices[3] = new Vector3(-1, 1, 0);
+        m.vertices = vertices;
 
-        m.uv = new Vector2[4];
-        m.uv[0] = new Vector2(0, 0);
-        m.uv[1] = new Vector2(0, 1);
-        m.uv[2] = new Vector2(1, 1);
-        m.uv[3] = new Vector2(1, 0);
+        //m.uv = new Vector2[4];
+        //m.uv[0] = new Vector2(0, 0);
+        //m.uv[1] = new Vector2(0, 1);
+        //m.uv[2] = new Vector2(1, 1);
+        //m.uv[3] = new Vector2(1, 0);
 
-        m.triangles = new int[] { 0, 1, 2, 0, 2, 3 };
+        int[] triangles = new int[] { 2, 1, 0, 3, 2, 0 };
+        m.triangles = triangles;
 
-        m.RecalculateNormals();
+        //m.RecalculateNormals();
+
+        ground.AddComponent<MeshFilter>();
+        ground.AddComponent<MeshRenderer>();
+        ground.GetComponent<MeshFilter>().mesh = m;
+        ground.GetComponent<MeshRenderer>().material = new Material(Shader.Find("Diffuse"));
 
     }
 
